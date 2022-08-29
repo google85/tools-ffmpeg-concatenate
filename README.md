@@ -19,3 +19,7 @@ $ ./concatenate --files
 
 # actual concatenate of all MP4 files from current folder or specified, orderer by name
 $ ./conatenate
+
+
+### Example:
+$ ./concatenate.sh --folder ./input/ --outfile ./output/file.mp4

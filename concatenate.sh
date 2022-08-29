@@ -8,7 +8,7 @@
 # - concatenates all .MP4 files in the current (or specified) folder into one  #
 #                                                                              #
 #                                                                              #
-# (c) 2021 .:DjBpF:.                                                           #
+# (c) 2022 .:DjBpF:.                                                           #
 #                                                                              #
 ################################################################################
 
@@ -81,7 +81,7 @@ case $options in
     ;;
 
     -outfile|--outfile)
-    OUTFILE="$2"
+    OUTPUT_FILE="$2"
     shift # past argument
     shift # past value
     ;;
@@ -115,9 +115,6 @@ show_files() {
     STOP_BEFORE_CONCAT=1
     echo -e "Files that are about to be used in concatenation:"
     find "$INFOLDER" -name "$FILES_TYPE" -printf "- %p \n" | sort -n
-    #find $INFOLDER -name "$FILES_TYPE" -printf "- '%p' \n" | sort -n
-    #echo `(find $INFOLDER -name "$FILES_TYPE" -printf "\n - file '%p' \n" | sort -n)`
-    #echo (find . -name $FILES_TYPE -printf "file '$PWD/%p'\n" | sort -n)
     #return
 }
 
@@ -132,14 +129,13 @@ if [ "$STOP_BEFORE_CONCAT" -ne "1" ]; then
     echo -e "\n"
     echo -e "Concatenating files..."
     # next line gives error if not chmod-ex +x
+	# optional
+#	find "$INFOLDER" -name "$FILES_TYPE" -printf "file '$PWD/%p'\n" | sort -n > list.lst
     $FFMPEG_PATH -f concat -safe 0 -i <(find . -name '*.MP4' -printf "file '$PWD/%p'\n" | sort -n) -c copy $OUTPUT_FILE
-#    $FFMPEG_PATH -f concat -safe 0 -i <(find . -name '*.MP4' -printf "file '$PWD/%p'\n" | sort -n) -c copy $OUTPUT_FILE
     echo -e "Done. \n"
 fi
 
 ##echo infolder=$INFOLDER
 
-
-#ffmpeg -f concat -safe 0 -i <(find . -name '*.MP4' -printf "file '$PWD/%p'\n" | sort -n) -c copy moovie03.mp4
 
 exit 0
